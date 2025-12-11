@@ -1,0 +1,107 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: ticket-system-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ticket_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ticket_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-ticket_system}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ticket_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ticket-network
+
+  # InfluxDB 2.x
+  influxdb:
+    image: influxdb:2.7-alpine
+    container_name: ticket-system-influxdb
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME:-admin}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:-adminpassword}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:-ticket_org}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:-ticket_metrics}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:-my-super-secret-auth-token}
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - influxdb_config:/etc/influxdb2
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ticket-network
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ticket-system-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - influxdb
+    networks:
+      - ticket-network
+
+  # FastAPI Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ticket-system-api
+    environment:
+      # Database
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ticket_user}:${POSTGRES_PASSWORD:-ticket_pass}@postgres:5432/${POSTGRES_DB:-ticket_system}
+      
+      # InfluxDB
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-my-super-secret-auth-token}
+      INFLUXDB_ORG: ${INFLUXDB_ORG:-ticket_org}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:-ticket_metrics}
+      
+      # JWT
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-this-in-production}
+      ALGORITHM: ${ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      
+      # Environment
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
+    networks:
+      - ticket-network
+
+volumes:
+  postgres_data:
+  influxdb_data:
+  influxdb_config:
+  grafana_data:
+
+networks:
+  ticket-network:
+    driver: bridge
