@@ -340,10 +340,20 @@ lsof -ti:8000 | xargs kill -9  # Para el puerto 8000
 
 ---
 
-## 📞 Contacto
+## Author
+Adrián Félix
 
-Si tienes dudas o sugerencias, abre un **Issue** en GitHub.
+Software Engineering
 
----
+Passionate about Android Developer, Full Stack and iOS development and clean architecture.
 
-**¡Happy Coding! 🚀**
+GitHub: @Elmamis69
+Email: guerofelix234@gmail.com
+
+**License**
+This project is licensed under the MIT License.
+
+## Getting Started
+1. Clone the repository:
+   ```bash
+   https://github.com/Elmamis69/ticket-master-api.git
