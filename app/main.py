@@ -68,9 +68,13 @@ async def health_check():
     return {"status": "healthy"}
 
 
-# TODO: Include routers when created
-# from app.api.v1 import routes_auth, routes_tickets, routes_comments, routes_analytics
-# app.include_router(routes_auth.router, prefix="/api/v1/auth", tags=["auth"])
+# Include API routers
+from app.api.v1 import routes_auth
+
+app.include_router(routes_auth.router, prefix="/api/v1/auth", tags=["Authentication"])
+
+# TODO: Uncomment when implemented
+# from app.api.v1 import routes_tickets, routes_comments, routes_analytics
 # app.include_router(routes_tickets.router, prefix="/api/v1/tickets", tags=["tickets"])
 # app.include_router(routes_comments.router, prefix="/api/v1/comments", tags=["comments"])
 # app.include_router(routes_analytics.router, prefix="/api/v1/analytics", tags=["analytics"])

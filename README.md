@@ -123,11 +123,11 @@ docker-compose logs -f api
 
 | Servicio | URL | Credenciales |
 |----------|-----|--------------|
-| **API** | http://localhost:8000 | - |
+| **API** | http://localhost:8000 | Ver archivo `.env` |
 | **Docs interactivos** | http://localhost:8000/docs | - |
-| **PostgreSQL** | localhost:5432 | user: `ticket_user` / pass: `ticket_pass` |
-| **InfluxDB** | http://localhost:8086 | user: `admin` / pass: `adminpassword` |
-| **Grafana** | http://localhost:3000 | user: `admin` / pass: `admin` |
+| **PostgreSQL** | localhost:5432 | Ver archivo `.env` (POSTGRES_USER/POSTGRES_PASSWORD) |
+| **InfluxDB** | http://localhost:8086 | Ver archivo `.env` (INFLUXDB_USERNAME/INFLUXDB_PASSWORD) |
+| **Grafana** | http://localhost:3000 | Ver archivo `.env` (GRAFANA_USER/GRAFANA_PASSWORD) |
 
 ---
 
@@ -262,10 +262,10 @@ Los dashboards muestran:
 - [x] Configuración base
 - [x] Conexiones a BD
 
-### 🚧 Fase 2: Autenticación (PENDIENTE)
-- [ ] Modelos User
-- [ ] JWT auth
-- [ ] RBAC
+### 🚧 Fase 2: Autenticación (COMPLETADA)
+- [x] Modelos User
+- [x] JWT auth
+- [x] RBAC
 
 ### 🚧 Fase 3: Tickets CRUD (PENDIENTE)
 - [ ] Modelos Ticket, Comment

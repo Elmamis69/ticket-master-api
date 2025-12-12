@@ -12,8 +12,8 @@ from app.db.session import Base
 from app.core.config import settings
 
 # Import all models here to ensure they are registered with SQLAlchemy
+from app.models.user import User
 # TODO: Uncomment when models are created
-# from app.models.user import User
 # from app.models.ticket import Ticket
 # from app.models.comment import Comment
 # from app.models.activity_log import ActivityLog
