@@ -262,26 +262,34 @@ Los dashboards muestran:
 - [x] Configuración base
 - [x] Conexiones a BD
 
-### 🚧 Fase 2: Autenticación (COMPLETADA)
+### ✅ Fase 2: Autenticación (COMPLETADA)
 - [x] Modelos User
 - [x] JWT auth
 - [x] RBAC
+- [x] Endpoints: register, login, /me
 
-### 🚧 Fase 3: Tickets CRUD (PENDIENTE)
-- [ ] Modelos Ticket, Comment
-- [ ] Endpoints básicos
-- [ ] Permisos
+### ✅ Fase 3: Tickets CRUD (COMPLETADA)
+- [x] Modelo Ticket con estados y prioridades
+- [x] Schemas Pydantic completos
+- [x] Endpoints CRUD con RBAC
+- [x] Asignación de agentes
+- [x] Migraciones de base de datos
 
-### 🚧 Fase 4: Métricas (PENDIENTE)
+### 🚧 Fase 4: Comentarios (PENDIENTE)
+- [ ] Modelo Comment
+- [ ] Endpoints para comentarios
+- [ ] Notificaciones
+
+### 🚧 Fase 5: Métricas (PENDIENTE)
 - [ ] Integración InfluxDB
 - [ ] Guardar métricas automáticamente
 - [ ] Endpoints analytics
 
-### 🚧 Fase 5: Grafana (PENDIENTE)
+### 🚧 Fase 6: Grafana (PENDIENTE)
 - [ ] Configurar datasources
 - [ ] Crear dashboards
 
-### 🚧 Fase 6: Testing (PENDIENTE)
+### 🚧 Fase 7: Testing (PENDIENTE)
 - [ ] Escribir todos los tests
 - [ ] Cobertura >80%
 
