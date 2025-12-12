@@ -15,7 +15,7 @@ from app.core.config import settings
 from app.models.user import User
 # TODO: Uncomment when models are created
 from app.models.ticket import Ticket
-# from app.models.comment import Comment
+from app.models.comment import Comment
 # from app.models.activity_log import ActivityLog
 
 # this is the Alembic Config object
