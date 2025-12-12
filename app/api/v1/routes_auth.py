@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from app.core.config import settings
 from app.core.security import verify_password, create_access_token, get_password_hash, decode_access_token
-from app.db.deps import get_db
+from app.db.deps import get_db, get_current_user
 from app.schemas.user import UserCreate, UserResponse
 from app.models.user import User
 
@@ -82,18 +82,11 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     }
 
 @router.get("/me", response_model=UserResponse)
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def get_me(current_user: User = Depends(get_current_user)):
     """
     Get current authenticated user information.
     """
-    # Decode JWT token
-    payload = decode_access_token(token)
-    if payload is None:
-        raise HTTPException(
-            status_code = status.HTTP_401_UNAUTHORIZED,
-            detail = "Could not validate credentials",
-            headers = {"WWW-Authenticate": "Bearer"},
-        )
+    return current_user
     
     # Extract user_id from payload
     user_id: str = payload.get("sub")
