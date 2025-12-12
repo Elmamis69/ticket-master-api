@@ -6,6 +6,7 @@ from app.db.deps import get_db, get_current_user
 from app.models.user import User, UserRole
 from app.models.ticket import Ticket
 from app.models.comment import Comment
+from app.services.metrics_service import metrics_service
 from app.schemas.comment import (
     CommentCreate,
     CommentUpdate, 
@@ -69,6 +70,12 @@ def create_comment(
     db.add(new_comment)
     db.commit()
     db.refresh(new_comment)
+
+    # Registrar métrica
+    metrics_service.record_comment_created(
+        ticket_id=ticket_id,
+        author_id=current_user.id
+    )
 
     return new_comment
 

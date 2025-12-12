@@ -31,7 +31,7 @@ def test_register_duplicate_email(client, db):
     """Test registration with duplicate email"""
     # Create a user first
     user = User(
-        email="existing@example.com",
+        email = "existing@example.com",
         full_name="Existing User",
         password_hash=get_password_hash("password123"),
         role=UserRole.USER
@@ -56,7 +56,7 @@ def test_login_success(client, db):
     """Test successful login"""
     # Create a user
     user = User(
-        email="testuser@example.com",
+        email = "testuser@example.com",
         full_name="Test User",
         password_hash=get_password_hash("testpass123"),
         role=UserRole.USER
@@ -82,7 +82,7 @@ def test_login_wrong_password(client, db):
     """Test login with wrong password"""
     # Create a user
     user = User(
-        email="testuser@example.com",
+        email = "testuser@example.com",
         full_name="Test User",
         password_hash=get_password_hash("correctpass"),
         role=UserRole.USER
@@ -117,7 +117,7 @@ def test_get_current_user(client, db):
     """Test getting current user info"""
     # Create a user
     user = User(
-        email="testuser@example.com",
+        email = "testuser@example.com",
         full_name="Test User",
         password_hash=get_password_hash("testpass123"),
         role=UserRole.USER

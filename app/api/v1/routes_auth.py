@@ -12,7 +12,7 @@ from app.models.user import User
 router = APIRouter()
 
 # OAuth2 scheme for token authentication
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "api/v1/auth/login")
 
 @router.post("/register", response_model=UserResponse, status_code = status.HTTP_201_CREATED)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):

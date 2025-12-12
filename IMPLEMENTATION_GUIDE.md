@@ -79,7 +79,7 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            detail = "Email already registered"
         )
     
     # 2. Hashear la contraseña
@@ -114,7 +114,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     if not user or not verify_password(form_data.password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail = "Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -122,7 +122,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Inactive user"
+            detail = "Inactive user"
         )
     
     # 4. Crear el token JWT
@@ -149,7 +149,7 @@ def get_current_user_info(token: str = Depends(oauth2_scheme), db: Session = Dep
     if payload is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
+            detail = "Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -158,7 +158,7 @@ def get_current_user_info(token: str = Depends(oauth2_scheme), db: Session = Dep
     if user_id is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials"
+            detail = "Could not validate credentials"
         )
     
     # 3. Buscar el usuario en la base de datos
@@ -166,7 +166,7 @@ def get_current_user_info(token: str = Depends(oauth2_scheme), db: Session = Dep
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
+            detail = "User not found"
         )
     
     # 4. Retornar el usuario

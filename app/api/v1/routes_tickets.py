@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
+from app.services.metrics_service import metrics_service
 
 from app.db.deps import get_db, get_current_user
 from app.models.user import User, UserRole
@@ -38,6 +39,12 @@ def create_ticket(
     db.add(new_ticket)
     db.commit()
     db.refresh(new_ticket)
+        # Registrar métrica
+    metrics_service.record_ticket_created(
+        ticket_id=new_ticket.id,
+        creator_id=current_user.id,
+        priority=new_ticket.priority.value
+    )
     return new_ticket
 
 # ============================================
@@ -85,7 +92,7 @@ def get_ticket(
     Obtener los detalles de un ticket específico.
     Verifica permisos según rol.
     """
-    ticket = db.query(Ticket).filter(Ticket.id == ticket_id).first()
+    ticket = db.query(Ticket).filter(Ticket.id == ticket_id).first()                        
 
     if not ticket:
         raise HTTPException(
@@ -157,10 +164,25 @@ def update_ticket(
     if ticket_data.priority is not None:
         ticket.priority = ticket_data.priority
     if ticket_data.status is not None:
+        # Registrar cambio de estado
+        old_status = ticket.status.value
         ticket.status = ticket_data.status
-        # Si se marca como resuelto, guardar el timestamp
-        if ticket.status == TicketStatus.RESOLVED and not ticket.resolved_at:
-            ticket.resolved_at = datetime.utcnow()
+        metrics_service.record_ticket_status_change(
+            ticket_id=ticket.id,
+            old_status=old_status,
+            new_status=ticket_data.status.value,
+            user_id=current_user.id
+        )
+        
+        # Si se marca como resuelto, calcular tiempo y registrar métrica
+        if ticket_data.status == TicketStatus.RESOLVED and not ticket.resolved_at:
+            ticket.resolved_at = datetime.now(timezone.utc)
+            resolution_time = int((ticket.resolved_at - ticket.created_at).total_seconds())
+            metrics_service.record_ticket_resolved(
+                ticket_id=ticket.id,
+                agent_id=ticket.assigned_agent_id,
+                resolution_time_seconds=resolution_time
+            )
     if ticket_data.assigned_agent_id is not None:
         ticket.assigned_agent_id = ticket_data.assigned_agent_id
 
@@ -214,7 +236,14 @@ def assign_ticket(
 
     ticket.assigned_agent_id = assignment.assigned_agent_id
 
-    # Cabmiar estado a IN_PROGRESS si está OPEN
+    # Registrar métrica de asignación
+    metrics_service.record_ticket_assigned(
+        ticket_id=ticket.id,
+        agent_id=assignment.assigned_agent_id,
+        assigned_by_id=current_user.id
+    )
+
+    # Cambiar estado a IN_PROGRESS si está OPEN
     if ticket.status == TicketStatus.OPEN:
         ticket.status = TicketStatus.IN_PROGRESS
 

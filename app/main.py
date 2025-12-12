@@ -74,8 +74,7 @@ from app.api.v1 import routes_auth
 app.include_router(routes_auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 
 # TODO: Uncomment when implemented
-from app.api.v1 import routes_tickets
-from app.api.v1 import routes_comments, routes_analytics
+from app.api.v1 import routes_tickets, routes_comments, routes_analytics
 app.include_router(routes_tickets.router, prefix="/api/v1", tags=["Tickets"])
 app.include_router(routes_comments.router, prefix="/api/v1", tags=["Comments"])
-# app.include_router(routes_analytics.router, prefix="/api/v1", tags=["Analytics"])
+app.include_router(routes_analytics.router, prefix="/api/v1", tags=["Analytics"])
