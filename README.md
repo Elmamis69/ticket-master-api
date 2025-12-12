@@ -275,10 +275,12 @@ Los dashboards muestran:
 - [x] Asignación de agentes
 - [x] Migraciones de base de datos
 
-### 🚧 Fase 4: Comentarios (PENDIENTE)
-- [ ] Modelo Comment
-- [ ] Endpoints para comentarios
-- [ ] Notificaciones
+### ✅ Fase 4: Comentarios (COMPLETADA)
+- [x] Modelo Comment con CASCADE delete
+- [x] Schemas Pydantic completos
+- [x] Endpoints CRUD con RBAC
+- [x] Rutas anidadas bajo tickets
+- [x] Migraciones de base de datos
 
 ### 🚧 Fase 5: Métricas (PENDIENTE)
 - [ ] Integración InfluxDB
