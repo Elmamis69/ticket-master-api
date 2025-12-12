@@ -74,7 +74,7 @@ ticket-system-api/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <tu-repositorio>
+git clone https://github.com/Elmamis69/ticket-master-api.git
 cd ticket-system-api
 ```
 
