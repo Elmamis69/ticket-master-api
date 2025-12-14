@@ -282,17 +282,26 @@ Los dashboards muestran:
 - [x] Rutas anidadas bajo tickets
 - [x] Migraciones de base de datos
 
-### 🚧 Fase 5: Métricas (PENDIENTE)
-- [ ] Integración InfluxDB
-- [ ] Guardar métricas automáticamente
-- [ ] Endpoints analytics
+### ✅ Fase 5: Métricas (COMPLETADA)
+- [x] Integración InfluxDB
+- [x] Servicio de métricas (metrics_service.py)
+- [x] Registro automático de eventos (crear ticket, cambio estado, asignación)
+- [x] Endpoints analytics:
+  - [x] `/api/v1/analytics/dashboard` - Dashboard completo
+  - [x] `/api/v1/analytics/agent/{id}` - Estadísticas por agente
+- [x] Schemas para analytics
+- [x] Métricas de tickets, prioridades, estados y agentes
 
 ### 🚧 Fase 6: Grafana (PENDIENTE)
-- [ ] Configurar datasources
-- [ ] Crear dashboards
+- [ ] Configurar datasources de InfluxDB
+- [ ] Crear dashboards visuales
+- [ ] Conectar métricas a gráficos
 
 ### 🚧 Fase 7: Testing (PENDIENTE)
-- [ ] Escribir todos los tests
+- [x] Tests de autenticación (8/8 pasando)
+- [ ] Tests de tickets
+- [ ] Tests de comentarios
+- [ ] Tests de analytics
 - [ ] Cobertura >80%
 
 ---
