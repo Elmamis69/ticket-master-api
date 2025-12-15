@@ -177,7 +177,14 @@ def update_ticket(
         # Si se marca como resuelto, calcular tiempo y registrar métrica
         if ticket_data.status == TicketStatus.RESOLVED and not ticket.resolved_at:
             ticket.resolved_at = datetime.now(timezone.utc)
-            resolution_time = int((ticket.resolved_at - ticket.created_at).total_seconds())
+            # Asegurar que ambos datetimes sean aware (UTC)
+            created = ticket.created_at
+            if created.tzinfo is None:
+                created = created.replace(tzinfo=timezone.utc)
+            resolved = ticket.resolved_at
+            if resolved.tzinfo is None:
+                resolved = resolved.replace(tzinfo=timezone.utc)
+            resolution_time = int((resolved - created).total_seconds())
             metrics_service.record_ticket_resolved(
                 ticket_id=ticket.id,
                 agent_id=ticket.assigned_agent_id,

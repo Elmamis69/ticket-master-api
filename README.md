@@ -299,22 +299,9 @@ Los dashboards muestran:
 
 ### 🚧 Fase 7: Testing (PENDIENTE)
 - [x] Tests de autenticación (8/8 pasando)
-- [ ] Tests de tickets
-- [ ] Tests de comentarios
-- [ ] Tests de analytics
-- [ ] Cobertura >80%
-
----
-
-## 🤝 Contribución
-
-Este es un proyecto de práctica para aprendizaje. Si quieres contribuir:
-
-1. Haz fork del proyecto
-2. Crea una rama con tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
+- [x] Tests de tickets
+- [x] Tests de comentarios
+- [x] Tests de analytics
 
 ---
 
