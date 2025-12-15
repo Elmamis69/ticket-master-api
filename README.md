@@ -292,10 +292,10 @@ Los dashboards muestran:
 - [x] Schemas para analytics
 - [x] Métricas de tickets, prioridades, estados y agentes
 
-### 🚧 Fase 6: Grafana (PENDIENTE)
-- [ ] Configurar datasources de InfluxDB
-- [ ] Crear dashboards visuales
-- [ ] Conectar métricas a gráficos
+### ✅ Fase 6: Grafana (COMPLETADA)
+- [x] Configurar datasources de InfluxDB
+- [x] Crear dashboards visuales
+- [x] Conectar métricas a gráficos
 
 ### 🚧 Fase 7: Testing (PENDIENTE)
 - [x] Tests de autenticación (8/8 pasando)
