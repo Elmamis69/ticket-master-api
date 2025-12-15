@@ -76,3 +76,109 @@ Este documento complementa el README y detalla la arquitectura, endpoints, model
 **Autor:** Adrián Félix
 **Contacto:** guerofelix234@gmail.com
 **Última actualización:** Diciembre 2025
+
+---
+
+## 🚀 Ejemplos de Uso de la API
+
+A continuación se muestran ejemplos prácticos para probar la API usando herramientas como curl, Postman o httpie.
+
+### 1. Registro de usuario
+
+**Request:**
+```json
+POST /api/v1/auth/register
+{
+  "email": "user@example.com",
+  "full_name": "Usuario Demo",
+  "password": "12345678"
+}
+```
+
+**Response:**
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "full_name": "Usuario Demo",
+  "role": "user"
+}
+```
+
+### 2. Login y obtención de token JWT
+
+**Request:**
+```json
+POST /api/v1/auth/login
+{
+  "username": "user@example.com",
+  "password": "12345678"
+}
+```
+
+**Response:**
+```json
+{
+  "access_token": "<jwt_token>",
+  "token_type": "bearer"
+}
+```
+
+### 3. Crear un ticket
+
+**Request:**
+```json
+POST /api/v1/tickets/
+Headers: { "Authorization": "Bearer <jwt_token>" }
+{
+  "title": "No puedo acceder",
+  "description": "Tengo problemas para entrar al sistema",
+  "priority": "high"
+}
+```
+
+**Response:**
+```json
+{
+  "id": 10,
+  "title": "No puedo acceder",
+  "description": "Tengo problemas para entrar al sistema",
+  "priority": "high",
+  "status": "open",
+  "creator_id": 1,
+  "assigned_agent_id": null,
+  "created_at": "2025-12-15T18:00:00Z",
+  "updated_at": null,
+  "resolved_at": null
+}
+```
+
+### 4. Consultar tickets del usuario
+
+**Request:**
+```json
+GET /api/v1/tickets/
+Headers: { "Authorization": "Bearer <jwt_token>" }
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 10,
+    "title": "No puedo acceder",
+    "description": "Tengo problemas para entrar al sistema",
+    "priority": "high",
+    "status": "open",
+    "creator_id": 1,
+    "assigned_agent_id": null,
+    "created_at": "2025-12-15T18:00:00Z",
+    "updated_at": null,
+    "resolved_at": null
+  }
+]
+```
+
+---
+
+Puedes encontrar más detalles de cada endpoint y sus respuestas en la sección anterior y en el README.
