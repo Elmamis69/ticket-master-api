@@ -2,7 +2,7 @@
 
 👉 **[Documentación Técnica Completa (DOCUMENTACION.md)](./DOCUMENTACION.md)**
 
-Sistema de gestión de tickets similar a **Cherwell** o sistemas de **Service Desk**, construido con FastAPI, PostgreSQL, InfluxDB y Grafana.
+Sistema de gestión de tickets con sistemas de **Service Desk**, construido con FastAPI, PostgreSQL, InfluxDB y Grafana.
 
 ---
 
